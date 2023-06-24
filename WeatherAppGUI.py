@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib import pyplot as plt
-from WeatherApp_DataExtraction_2 import HTMLfetcher, HTMLparser
+from WeatherApp_DataExtraction import HTMLfetcher, HTMLparser
 
 from PyQt5.QtWidgets import QApplication
 import sys

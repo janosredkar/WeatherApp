@@ -1,18 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 13 19:21:18 2023
-
-@author: jan.osredkar
-"""
-
-# you PIP INSTALLed LXML
-
-# changes:
-# self.TimeDate je sedaj date object, import datetime] 
-# convert return data getData_fromXML to float/int where needed.
-# set data lists in getData_fromXML private
-# convert 
-
 import lxml
 from bs4 import BeautifulSoup
 import requests

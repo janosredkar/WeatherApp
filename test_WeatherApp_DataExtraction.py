@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 20 18:43:56 2023
-
-@author: jan.osredkar
-"""
-# '''https://automationpanda.com/2017/03/14/python-testing-101-pytest/'''
-
-from WeatherApp_DataExtraction_2 import HTMLfetcher, HTMLparser
+from WeatherApp_DataExtraction import HTMLfetcher, HTMLparser
 import pytest
 
 ''' http://agromet.mkgp.gov.si/APP2/AgrometContent/xml/72.xml'''
