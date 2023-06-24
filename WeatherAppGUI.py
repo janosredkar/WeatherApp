@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib import pyplot as plt
-from WeatherApp_DataExtraction import HTMLfetcher, HTMLparser
+from WeatherApp_DataExtraction_2 import HTMLfetcher, HTMLparser
 
 from PyQt5.QtWidgets import QApplication
 import sys
@@ -75,14 +75,21 @@ class Canvas(FigureCanvas):
         self.noPlaces = 6
         for n in range(self.noPlaces):
             self.axes.append(fig.add_subplot(3,3,n+1)) 
+            self.axes[n].title.set_text(WeatherData[n][0][0])
 
             #Plot Av. temp
             if(len(WeatherData[n][1])>0):
+                # print(WeatherData[n][1])
+                # print('\n')
+                # print(WeatherData[n][2])
+                # print("n is: ", n)
+                # print('\n')
+                
                 self.axes[n].plot(WeatherData[n][1], WeatherData[n][2], '*', c='r', label="T[°C]")
                 self.axes[n].set_ylabel('T[°C], RH[%], WS[m/s]')
                 self.axes[n].set_xlabel('Month-Day Hour')
                 self.axes[n].legend(loc='upper right')
-           
+            
             #Plot RH
             if (len(WeatherData[n][3]) == 192):
                 self.axes[n].plot(WeatherData[n][1], WeatherData[n][3][::2], '*', c='g', label="RH[%]")

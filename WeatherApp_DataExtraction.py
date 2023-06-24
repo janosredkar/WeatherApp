@@ -64,21 +64,50 @@ class HTMLparser:
         return self.xml
                     
     def getData_fromXML(self):
+        #Get the dates that have corresponding measurements (some of them are empty - without measurements)
+        def getDate(self, inDate):
+            txt = getTXT_normal(self, inDate)
+            # print(txt)
+            self.datetime = []
+            for i in range(len(txt)-1):
+                if(len(txt[i])>0 and txt[i][-3:] == 'CET'):
+                    try:
+                        eval(txt[i+1]) #if i+1 is a number, than it corresponds to timedate inDate[i].
+                        self.datetime.append(txt[i])
+                    except:
+                        pass
+            return self.datetime
+        
         #extract text content from a txt within a tags 
-        def getTXT(self, inTxt):
+        def getTXT_normal(self, inTxt):
             self.outTxt = []
             for param in inTxt:
                 self.outTxt.append(param.get_text())
             return self.outTxt
+        
+        #extract text content from a txt within a tags 
+        def getTXT(self, inTxt_):
+          self.inTxt = getTXT_normal(self, inTxt_)
+          self.outTxt = []
+          for i in range(len(self.inTxt)-1):
+              if(len(self.inTxt[i])>0 and self.inTxt[i][-3:] == 'CET'):
+                  try:
+                      self.outTxt.append(eval(self.inTxt[i+1]))
+                      # datetime.append(domainTitle[i]) # we dont need date anymore as it is deriven from getDate function 
+                  except:
+                      pass
+          return self.outTxt
                 
         self.XMLsoup = BeautifulSoup(self.__soupFeed.content, features="lxml")
         
-        self.__domainTitle = getTXT(self.XMLsoup, self.XMLsoup.findAll('domain_title'))
-        [self.__TimeDate.append(datetime.strptime(x[:-4], '%d.%m.%Y %H:%M')) for x in getTXT(self.XMLsoup, self.XMLsoup.findAll('valid'))[2:]]
-        # [self.__TimeDate.append(x[:-4]) for x in getTXT(self.XMLsoup, self.XMLsoup.findAll('valid'))[2:]]
-        [self.__avTemperature.append(eval(x)) for x in getTXT(self.XMLsoup, self.XMLsoup.findAll('tavg'))]
-        [self.__avRelativeHumidity.append(eval(x)) for x in getTXT(self.XMLsoup, self.XMLsoup.findAll('rhavg'))]
-        [self.__avWindSpeed.append(eval(x)) for x in getTXT(self.XMLsoup, self.XMLsoup.findAll('ffavg'))]
+        self.__domainTitle = getTXT_normal(self.XMLsoup, self.XMLsoup.findAll('domain_title'))
+        [self.__TimeDate.append(datetime.strptime(x[:-4], '%d.%m.%Y %H:%M')) for x in getDate(self.XMLsoup, self.XMLsoup.findAll(['valid', 'tavg']))] # to get correct number of dates - some are redundant
+        # [self.__TimeDate.append(x[:-4]) for x in getTXT(self.XMLsoup, self.XMLsoup.findAll('valid'))]
+        [self.__avTemperature.append(x) for x in getTXT(self.XMLsoup, self.XMLsoup.findAll(['valid', 'tavg']))]
+        [self.__avRelativeHumidity.append(x) for x in getTXT(self.XMLsoup, self.XMLsoup.findAll(['valid', 'rhavg']))]
+        [self.__avWindSpeed.append(x) for x in getTXT(self.XMLsoup, self.XMLsoup.findAll(['valid', 'ffavg']))]
+        
+        # print("Timedate length: ", len(self.__TimeDate))
         return [self.__domainTitle, self.__TimeDate, self.__avTemperature, self.__avRelativeHumidity, self.__avWindSpeed]
             
     @property  #getter for response(encapsulation)
