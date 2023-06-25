@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name="SubPack",
+    name="WeatherApp_pck",
     version="0.0.1",
     author="Jan Osredkar",
     author_email="jo6434@student.uni-lj.si",
