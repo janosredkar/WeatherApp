@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="WeatherApp_pck",
-    version="0.0.1",
+    version="0.0.2",
     author="Jan Osredkar",
     author_email="jo6434@student.uni-lj.si",
     description="Package WeatherApp with whl",
