@@ -1,4 +1,4 @@
-from WeatherApp_DataExtraction import HTMLfetcher, HTMLparser
+from .WeatherApp_DataExtraction import HTMLfetcher, HTMLparser
 import pytest
 
 ''' http://agromet.mkgp.gov.si/APP2/AgrometContent/xml/72.xml'''
